@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from schemas import PostExercise
 from models import Exercise
 from db import engine, Base, get_db
+
 app = FastAPI()
 
 get_db()
@@ -12,11 +13,11 @@ async def root():
 
 
 
-# @app.post("/exercise")
-# async def add_exercise(post:PostExercise,db:db_dependency):
-#     db.add
+@app.post("/exercise")
+async def add_exercise(post:PostExercise,db:db_dependency):
+    db.add
 
-#     return {"name":post.name,
-#             "reps":post.reps}
+    return {"name":post.name,
+            "reps":post.reps}
 
 Base.metadata.create_all(bind=engine)
