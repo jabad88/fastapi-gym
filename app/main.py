@@ -6,8 +6,10 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
 import boto3
+import auth
 
 app = FastAPI()
+app.include_router(auth.router)
 
 load_dotenv()
 
