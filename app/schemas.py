@@ -7,3 +7,11 @@ class PostExercise(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserInDB(BaseModel):
+    username: str
+    hashed_password: str
+
+    class Config:
+        orm_mode = True
