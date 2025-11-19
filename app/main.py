@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import os
 import boto3
 import auth
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 app.include_router(auth.router)
@@ -14,6 +16,18 @@ app.include_router(auth.router)
 load_dotenv()
 
 Base.metadata.create_all(engine)
+
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 get_db()
 
@@ -33,10 +47,13 @@ async def add_exercise(post:PostExercise, db: Session = Depends(get_db)):
     return new_exercise
 
 
+@app.get("/get_exercise")
+async def get_exercises(db: Session = Depends(get_db)):
+    all_exercises = db.query(Exercise).all()
+    return all_exercises
+
 @app.post("/upload")
 async def upload_membership_info():
-
-
     s3_client = boto3.client(
         service_name='s3',
         region_name=os.getenv("AWS_REGION"),
