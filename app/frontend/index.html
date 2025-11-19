@@ -3,12 +3,12 @@
   <body>
     <h1>FastAPI Test Frontend</h1>
 
-    <button onclick="loadUsers()">Load Users</button>
+    <button onclick="loadExercises()">Load Exercises</button>
 
     <pre id="output"></pre>
 
     <script>
-      async function loadUsers() {
+      async function loadExercises() {
         const res = await fetch("http://localhost:8000/get_exercise");
         const data = await res.json();
         document.getElementById("output").innerText = JSON.stringify(data, null, 2);
